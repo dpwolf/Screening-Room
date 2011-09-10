@@ -3,15 +3,16 @@
 <head>
     <meta charset="utf-8">
     <title>Video</title>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/jquery-1.6.2.min.js"></script>
-    <script src="/js/froogaloop2.min.js"></script>
-    <link rel="stylesheet" href="/stylesheets/base.css" type="text/css" media=screen>
-    <link rel="stylesheet" href="/stylesheets/reset.css" type="text/css" media=screen>
-    <link rel="stylesheet" href="/stylesheets/screeningroom.css" type="text/css" media=screen>
+    <script src="public/socket.io/socket.io.js"></script>
+    <script src="public/js/jquery-1.6.2.min.js"></script>
+    <script src="public/js/froogaloop2.min.js"></script>
+    <link rel="stylesheet" href="public/stylesheets/base.css" type="text/css" media=screen>
+    <link rel="stylesheet" href="public/stylesheets/reset.css" type="text/css" media=screen>
+    <link rel="stylesheet" href="public/stylesheets/screeningroom.css" type="text/css" media=screen>
     <script>
 
     $(document).ready(function(){
+    
         $('.x-join-room').live('click',function(){
             if(nickname){
                 var room = $(this).data('room');
@@ -246,196 +247,226 @@
             <input class="submit" type="submit" value="Add video &rarr;">
         </form>
     </div>
+	
+	<div class="char-box">
+		
+		<div class="char cow"></div>
+		
+		<div class="char monkey"></div>
+		
+		<div class="char monster"></div>
+		
+	</div>
+	
+    <div id="couch" class=""></div>
 
-    <div id="couch"></div>
-
-
+	<div class="queue-bar chrome">
+	
+		<div class="queue-box">
+			
+			<div class="label green">Now Playing</div>
+			
+			<div class="queue-item">
+			
+				<div class="user">
+					
+					<div class="user-photo">
+					
+					</div>
+					
+					<div class="user-name">Jon G.</div>
+					
+				</div>
+				
+				<div class="video">
+					
+					<div class="video-name">
+						
+						Name of Video
+					
+					</div>
+					
+					<div class="video-dur">5 mins</div>
+					
+				</div>
+			
+			
+			</div>
+			    		
+		</div>
+		
+		<div class="queue-box">
+			
+			<div class="label yellow">Up Next</div>
+			
+			<div class="queue-item">
+			
+			
+			</div>
+			    		
+		</div>
+			
+	</div>
 
   </div><!--wrapper-->
 
   <div id="right_column">
         <div class="sidebar">
+        
+        	<div class="sb-header chrome">
+        	
+        		<div class="new-room" style="display:none;">Create Room</div>
         		
-        			<div class="sb-header chrome">
+        		<div id="room-head">
+        		
+        			<div class="room-title">
         				
-        				<div class="room-title">
-        					
-        					<span id="current-room" class="room-name"></span>
-        					
-        				</div>
-        				
-        				<div class="exit-room" id="leave_room" onclick="leave_room();">EXIT</div>
+        				<input class="room-name" type="text" name="" value="Room Name" />
         			
         			</div>
         			
-        			<div class="list-view">
-        				
-        				<ul id="rooms">
-        				
-        					<li>
-        					
-        						<div class="thumb">
-        						
-        							<div class="thumb-content">
-        							 
-        							 23
-        							
-        							</div>
-        							
-        						</div>
-        						
-        						<div class="desc">
-        							
-        							Dave's Room
-        								
-        						</div>
-        						
-        						<div class="clear"></div>
-        						
-        					</li>
-        				
-        				</ul>
-        				
-        				<ul>
-        				
-        					<li>
-        					
-        						<div class="thumb">
-        						
-        							<div class="thumb-content">
-        							 
-        							 23
-        							
-        							</div>
-        							
-        						</div>
-        						
-        						<div class="desc">
-        							
-        							Dave's Room
-        								
-        						</div>
-        						
-        						<div class="clear"></div>
-        						
-        					</li>
-        				
-        				</ul>
-        				
-        				<ul>
-        				
-        					<li>
-        					
-        						<div class="thumb">
-        						
-        							<div class="thumb-content">
-        							 
-        							 23
-        							
-        							</div>
-        							
-        						</div>
-        						
-        						<div class="desc">
-        							
-        							Dave's Room
-        								
-        						</div>
-        						
-        						<div class="clear"></div>
-        						
-        					</li>
-        				
-        				</ul>
-        				
-        				<ul>
-        				
-        					<li>
-        					
-        						<div class="thumb">
-        						
-        							<div class="thumb-content">
-        							 
-        							 23
-        							
-        							</div>
-        							
-        						</div>
-        						
-        						<div class="desc">
-        							
-        							Dave's Room
-        								
-        						</div>
-        						
-        						<div class="clear"></div>
-        						
-        					</li>
-        				
-        				</ul>
-        				
-        				<ul>
-        				
-        					<li>
-        					
-        						<div class="thumb">
-        						
-        							<div class="thumb-content">
-        							 
-        							 23
-        							
-        							</div>
-        							
-        						</div>
-        						
-        						<div class="desc">
-        							
-        							Dave's Room
-        								
-        						</div>
-        						
-        						<div class="clear"></div>
-        						
-        					</li>
-        				
-        				</ul>
-        				
-        			</div>
-        			
-        			<div class="divider chrome"></div>
-        			
-        			<div class="chat-box">
-        				
-        				<div class="chat-display">
-        				
-        					<p><span class="u-name blue">Jon G.:</span> This internet sucks!!!! I hate you all.
-        					</p>
-        					
-        					<p><span class="u-name red">Jon G.:</span> This internet sucks!!!! I hate you all.
-        					</p>
-        				
-        					<p><span class="u-name blue">Jon G.:</span> This internet sucks!!!! I hate you all.
-        					</p>
-        					
-        					<p><span class="u-name red">Jon G.:</span> This internet sucks!!!! I hate you all.
-        					</p>
-        					
-        					<p><span class="u-name blue">Jon G.:</span> This internet sucks!!!! I hate you all.
-        					</p>
-        					
-        					<p><span class="u-name red">Jon G.:</span> This internet sucks!!!! I hate you all.
-        					</p>
-        				</div>
-        			
-        			</div>
-        			
-        			<div class="chat-input chrome">
-        			
-        				<input type="text" name="" value="Chat here." />
-        				
-        			</div>
+        			<div class="exit-room">EXIT</div>
         		
         		</div>
+        	
+        	</div>
+        	
+        	<div class="list-view">
+        		
+        		<div class="search-input">
+        		
+        			<input type="text" name="" value="Search Video or URL" />
+        			
+        		</div>
+        		
+        		<ul>
+        		
+        			<li>
+        			
+        				<div class="thumb">
+        				
+        					<div class="thumb-content">
+        					 
+        					  <img src="thumb.jpg"  height="45"/>
+        					
+        					</div>
+        					
+        				</div>
+        				
+        				<div class="desc">
+        					
+        					Dave's Room
+        						
+        				</div>
+        				
+        				<div class="clear"></div>
+        				
+        			</li>
+        		
+        			<li>
+        			
+        				<div class="thumb">
+        				
+        					<div class="thumb-content">
+        					 
+        					 23
+        					
+        					</div>
+        					
+        				</div>
+        				
+        				<div class="desc">
+        					
+        					Dave's Room
+        						
+        				</div>
+        				
+        				<div class="clear"></div>
+        				
+        			</li>
+        		
+        			<li>
+        			
+        				<div class="thumb">
+        				
+        					<div class="thumb-content">
+        					 
+        					 23
+        					
+        					</div>
+        					
+        				</div>
+        				
+        				<div class="desc">
+        					
+        					Dave's Room
+        						
+        				</div>
+        				
+        				<div class="clear"></div>
+        				
+        			</li>
+        		
+        			<li>
+        			
+        				<div class="thumb">
+        				
+        					<div class="thumb-content">
+        					 
+        					 23
+        					
+        					</div>
+        					
+        				</div>
+        				
+        				<div class="desc">
+        					
+        					Dave's Room
+        						
+        				</div>
+        				
+        				<div class="clear"></div>
+        				
+        			</li>
+        		
+        		</ul>
+        		
+        	</div>
+        	
+        	<div class="divider chrome"></div>
+        	
+        	<div class="chat-box">
+        		
+        		<div class="chat-display">
+        		
+        			<p><span class="u-name blue">Jon G.:</span> This internet sucks!!!! I hate you all.
+        			</p>
+        			
+        			<p><span class="u-name red">Jon G.:</span> This internet sucks!!!! I hate you all.
+        			</p>
+        		
+        			<p><span class="u-name blue">Jon G.:</span> This internet sucks!!!! I hate you all.
+        			</p>
+        			
+        			<p><span class="u-name red">Jon G.:</span> This internet sucks!!!! I hate you all.
+        			</p>
+        			
+        			<p><span class="u-name blue">Jon G.:</span> This internet sucks!!!! I hate you all.
+        			</p>
+        			
+        			<p><span class="u-name red">Jon G.:</span> This internet sucks!!!! I hate you all.
+        			</p>
+        		</div>
+        	
+        	</div>
+        	
+        	<div class="chat-input chrome">
+        	
+        		<input type="text" name="" value="Chat here." />
+        		
+        	</div>
+        
+        </div>
         		
         		<!--
         

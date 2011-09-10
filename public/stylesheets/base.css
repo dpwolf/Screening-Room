@@ -11,13 +11,15 @@ body {
 }
 
 .wrapper {
-  background: url(../images/background.png);
+  background: url(../images/bg2.png);
   margin-top:-5px;
   height: 1010px;
   width: 850px;
+  position: relative;
   background-position: center;
   background-repeat: no-repeat;
   float:left;
+  overflow: hidden;
 }
 
 #logo {
@@ -76,7 +78,9 @@ margin-left:10px;
   left:850px;
   right:0;
   top:0;
-  bottom:0
+  bottom:0;
+  
+  height: 100%;
 }
 
 #right_column h3, #from{
@@ -92,11 +96,20 @@ margin-left:10px;
 }
 
 #couch {
-  background: url(../images/everyone.png) no-repeat;
-width:610px;
-height:381px;
-margin:10px auto;
+ 	background: url(../images/couch.png) 0 bottom no-repeat;
+	width:610px;
+	height:361px;
+	margin:10px auto;
+	position: relative;
+	z-index:50;
 }
+
+
+#couch.everyone {
+	width:610px;
+	height:381px;
+  background: url(../images/everyone.png) no-repeat;
+ }
 
 #leave_room {
 height: 50px;
