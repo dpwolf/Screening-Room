@@ -48,7 +48,6 @@
 var express = require('express')
     ,app = express.createServer()
     , io = require('socket.io').listen(app)
-    , nko = require('nko')('eLfqDKCLmVACDpH7');
 
   app.configure(function(){
     app.use(express.static(__dirname + '/public'));
