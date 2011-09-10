@@ -1,6 +1,39 @@
 var express = require('express')
     ,app = express.createServer()
     , io = require('socket.io').listen(app)
+    , OAuth = require('oauth').OAuth
+    , sys = require('sys');
+
+var shelbyConsumerKey = 'dxhKbqnee6MtQxG23sTkRrdhvBIoUDYELy311yvp',
+    shelbyConsumerSecret = 'Vey8e37gdJXeU9RkURVdm7ISwAHvrNTFbQPefn33'
+
+    var oAuth = new OAuth("http://dev.shelby.tv/oauth/request_token",
+                     "http://dev.shelby.tv/oauth/access_token", 
+                     shelbyConsumerKey,shelbyConsumerSecret,
+                     "1.0", null, "PLAINTEXT");
+
+    // access tokens for dpwolf
+    var access_token = 'jKFREQP8HAhsGQRuhaA3Jy1vdwotKYmTrz6A9P4W',
+        access_token_secret = '09XQRL5gnS2CPJ1LCYVxJJYEMQMsNjAImug1U27A';
+
+        oAuth.get("http://api.shelby.tv/v1/users.json", access_token, access_token_secret, function(error, data) {
+            console.log('users', sys.inspect(data));
+        });
+        oAuth.get("http://api.shelby.tv/v1/channels.json", access_token, access_token_secret, function(error, data) {
+            if(!error){
+                var channels = JSON.parse(data);
+                if(channels.length){
+                    for(channel in channels){
+                        console.log('channel',channels[channel]['_id'], channels[channel]);                        
+                        oAuth.get("http://api.shelby.tv/v1/channels/" + channels[channel]['_id'] + "/broadcasts.json", access_token, access_token_secret, function(error, channel_data) {
+                            if(!error){
+                                console.log('channel data' ,JSON.parse(channel_data));
+                            }
+                        });
+                    }
+                }
+            }
+        });
 
   app.configure(function(){
     app.use(express.static(__dirname + '/public'));
