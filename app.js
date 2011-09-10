@@ -65,10 +65,12 @@ app.get('/oauth/callback', function(req, res){
       // Right here is where we would write out some nice user stuff
       // res.send('yo',500);
 
-      shelby.users(req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function(){console.log('error')}, function(data){
-          console.log('users',data);
-          res.send('<pre>user connected \n' + data + '</pre>',500);
-      })
+      res.redirect('/?success=true');
+
+      // shelby.users(req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function(){console.log('error')}, function(data){
+      //     console.log('users',data);
+      //     res.send('<pre>user connected \n' + data + '</pre>',500);
+      // })
     }
     });
 });
