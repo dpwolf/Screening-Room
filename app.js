@@ -5,38 +5,26 @@ var express = require('express')
     , sys = require('sys')
     , shelby = require('./lib/shelby_api')
 
-    // access tokens for dpwolf
-    var access_token = 'jKFREQP8HAhsGQRuhaA3Jy1vdwotKYmTrz6A9P4W',
-        access_token_secret = '09XQRL5gnS2CPJ1LCYVxJJYEMQMsNjAImug1U27A';
-        shelby.users(access_token, access_token_secret, function(error){
-            console.log('error',error);
-        }, function(data){
-            console.log('users data',data)
-        })
+// access tokens for dpwolf
+var access_token = 'jKFREQP8HAhsGQRuhaA3Jy1vdwotKYmTrz6A9P4W',
+    access_token_secret = '09XQRL5gnS2CPJ1LCYVxJJYEMQMsNjAImug1U27A';
+    shelby.users(access_token, access_token_secret, function(error){
+        console.log('error',error);
+    }, function(data){
+        console.log('users data',data)
+    });
+
+// app.use(express.logger());
+app.use(express.bodyParser());
+app.use(express.cookieParser());
+app.use(express.session({
+    secret: "sadlfkjaslkjfwoeu3r2"
+}));
 
 
-        // oAuth.get("http://api.shelby.tv/v1/users.json", access_token, access_token_secret, function(error, data) {
-        //     console.log('users', sys.inspect(data));
-        // });
-        // oAuth.get("http://api.shelby.tv/v1/channels.json", access_token, access_token_secret, function(error, data) {
-        //     if(!error){
-        //         var channels = JSON.parse(data);
-        //         if(channels.length){
-        //             for(channel in channels){
-        //                 console.log('channel',channels[channel]['_id'], channels[channel]);                        
-        //                 oAuth.get("http://api.shelby.tv/v1/channels/" + channels[channel]['_id'] + "/broadcasts.json", access_token, access_token_secret, function(error, channel_data) {
-        //                     if(!error){
-        //                         console.log('channel data' ,JSON.parse(channel_data));
-        //                     }
-        //                 });
-        //             }
-        //         }
-        //     }
-        // });
-
-  app.configure(function(){
+app.configure(function(){
     app.use(express.static(__dirname + '/public'));
-  });
+});
 
 
 app.listen(80);
@@ -44,6 +32,60 @@ app.listen(80);
 app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');
 });
+
+app.get('/connect', function (req, res) {
+    // do stuff
+    console.log('login');
+    shelby.consumer().getOAuthRequestToken(function(error, oauthToken, oauthTokenSecret, results){
+      if (error) {
+        console.log('error',error)
+        res.send("Error getting OAuth request token : " + sys.inspect(error), 500);
+      } else {  
+            console.log('login stuff ', oauthToken,oauthTokenSecret)
+        req.session.oauthRequestToken = oauthToken;
+        req.session.oauthRequestTokenSecret = oauthTokenSecret;
+        res.redirect("http://dev.shelby.tv/oauth/authorize?oauth_token="+oauthToken);      
+      }
+    });
+    
+});
+
+app.get('/oauth/callback', function(req, res){
+    sys.puts(">>"+req.session.oauthRequestToken);
+    sys.puts(">>"+req.session.oauthRequestTokenSecret);
+    sys.puts(">>"+req.query.oauth_verifier);
+    shelby.consumer().getOAuthAccessToken(req.session.oauthRequestToken, req.session.oauthRequestTokenSecret, req.query.oauth_verifier, function(error, oauthAccessToken, oauthAccessTokenSecret, results) {
+    if (error) {
+      res.send("Error getting OAuth access token : " + sys.inspect(error) + "["+oauthAccessToken+"]"+ "["+oauthAccessTokenSecret+"]"+ "["+sys.inspect(results)+"]", 500);
+    } else {
+        console.log('oauthyy', oauthAccessToken,oauthAccessTokenSecret);
+
+      req.session.oauthAccessToken = oauthAccessToken;
+      req.session.oauthAccessTokenSecret = oauthAccessTokenSecret;
+      // Right here is where we would write out some nice user stuff
+      // res.send('yo',500);
+
+      shelby.users(req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function(){console.log('error')}, function(data){
+          console.log('users',data);
+          res.send('<pre>user connected \n' + data + '</pre>');
+      })
+
+      shelby.consumer().get("http://twitter.com/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response) {
+        if (error) {
+          res.send("Error getting twitter screen name : " + sys.inspect(error), 500);
+        } else {
+          req.session.twitterScreenName = data["screen_name"];    
+          res.send('You are signed in: ' + req.session.twitterScreenName)
+        }  
+      });  
+    }
+    });
+});
+
+
+
+
+
 
 var rooms = {};
 
