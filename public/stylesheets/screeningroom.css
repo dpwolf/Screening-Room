@@ -4,7 +4,6 @@
 
 .sidebar {
 	background: #292929;
-	background: #f00;
 	width: 210px;
 	height: 100%;
 }
@@ -125,9 +124,13 @@
 	background: #61c5f8;
 }
 
+.list-view li:hover .thumb-content {
+	background: #61c5f8;
+}
+
 .list-view {
+	height: 320px;
 	overflow-y: auto;
-	height: 280px;
 	overflow-x:hidden;
 	
 }
@@ -299,4 +302,5 @@
 	height: 180px;
 	background-image: url(../images/monster.png);
 }
+
 

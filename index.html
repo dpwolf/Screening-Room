@@ -3,12 +3,12 @@
 <head>
     <meta charset="utf-8">
     <title>Video</title>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/jquery-1.6.2.min.js"></script>
-    <script src="/js/froogaloop2.min.js"></script>
-    <link rel="stylesheet" href="/stylesheets/base.css" type="text/css" media=screen>
-    <link rel="stylesheet" href="/stylesheets/reset.css" type="text/css" media=screen>
-    <link rel="stylesheet" href="/stylesheets/screeningroom.css" type="text/css" media=screen>
+    <script src="public/socket.io/socket.io.js"></script>
+    <script src="public/js/jquery-1.6.2.min.js"></script>
+    <script src="public/js/froogaloop2.min.js"></script>
+    <link rel="stylesheet" href="public/stylesheets/base.css" type="text/css" media=screen>
+    <link rel="stylesheet" href="public/stylesheets/reset.css" type="text/css" media=screen>
+    <link rel="stylesheet" href="public/stylesheets/screeningroom.css" type="text/css" media=screen>
     <script>
 
     $(document).ready(function(){
@@ -311,9 +311,10 @@
   </div><!--wrapper-->
 
   <div id="right_column">
+  
         <div class="sidebar">
-        
-        	<div class="sb-header chrome">
+    			    
+  	      	<div class="sb-header chrome">
         	
         		<div class="new-room" style="display:none;">Create Room</div>
         		
@@ -340,7 +341,29 @@
         		</div>
         		
         		<ul>
-        		
+        			
+        			<li>
+        			
+        				<div class="thumb">
+        				
+        					<div class="thumb-content">
+        					 
+        					  <img src="thumb.jpg"  height="45"/>
+        					
+        					</div>
+        					
+        				</div>
+        				
+        				<div class="desc">
+        					
+        					Dave's Room
+        						
+        				</div>
+        				
+        				<div class="clear"></div>
+        				
+        			</li>
+        			
         			<li>
         			
         				<div class="thumb">
@@ -432,38 +455,42 @@
         		</ul>
         		
         	</div>
-        	
+        		
         	<div class="divider chrome"></div>
         	
-        	<div class="chat-box">
-        		
-        		<div class="chat-display">
-        		
-        			<p><span class="u-name blue">Jon G.:</span> This internet sucks!!!! I hate you all.
-        			</p>
-        			
-        			<p><span class="u-name red">Jon G.:</span> This internet sucks!!!! I hate you all.
-        			</p>
-        		
-        			<p><span class="u-name blue">Jon G.:</span> This internet sucks!!!! I hate you all.
-        			</p>
-        			
-        			<p><span class="u-name red">Jon G.:</span> This internet sucks!!!! I hate you all.
-        			</p>
-        			
-        			<p><span class="u-name blue">Jon G.:</span> This internet sucks!!!! I hate you all.
-        			</p>
-        			
-        			<p><span class="u-name red">Jon G.:</span> This internet sucks!!!! I hate you all.
-        			</p>
-        		</div>
+        	<div id="chat">
+	        
+	        	<div class="chat-box">
+	        		
+	        		<div class="chat-display">
+	        		
+	        			<p><span class="u-name blue">Jon G.:</span> This internet sucks!!!! I hate you all.
+	        			</p>
+	        			
+	        			<p><span class="u-name red">Jon G.:</span> This internet sucks!!!! I hate you all.
+	        			</p>
+	        		
+	        			<p><span class="u-name blue">Jon G.:</span> This internet sucks!!!! I hate you all.
+	        			</p>
+	        			
+	        			<p><span class="u-name red">Jon G.:</span> This internet sucks!!!! I hate you all.
+	        			</p>
+	        			
+	        			<p><span class="u-name blue">Jon G.:</span> This internet sucks!!!! I hate you all.
+	        			</p>
+	        			
+	        			<p><span class="u-name red">Jon G.:</span> This internet sucks!!!! I hate you all.
+	        			</p>
+	        		</div>
+	        	
+	        	</div>
+	        	
+	        	<div class="chat-input chrome">
+	        	
+	        		<input type="text" name="" value="Chat here." />
+	        		
+	        	</div>
         	
-        	</div>
-        	
-        	<div class="chat-input chrome">
-        	
-        		<input type="text" name="" value="Chat here." />
-        		
         	</div>
         
         </div>
