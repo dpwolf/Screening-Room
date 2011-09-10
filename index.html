@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Video</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/jquery-1.6.2.min.js"></script>
+    <script src="/js/froogaloop2.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/base.css" type="text/css" media=screen>
+    <link rel="stylesheet" href="/stylesheets/reset.css" type="text/css" media=screen>
+    <script>
+
+    $(document).ready(function(){
+        $('.x-join-room').live('click',function(){
+            if(nickname){
+                var room = $(this).data('room');
+                join_room(room);
+            }else{
+                alert('Please choose a nickname before you join a room');
+            }
+        })
+    })
+
+
+    var username_is_set = false,
+        nickname = false,
+        video_queue = [],
+        old_video_queue = [],
+        current_video = null;
+
+    function addEvent(element, eventName, callback) {
+        if (element.addEventListener) {
+            element.addEventListener(eventName, callback, false);
+        }
+        else {
+            element.attachEvent(eventName, callback, false);
+        }
+    }
+
+    function setup_event_listners(){
+        var froogaloop = $f(document.querySelectorAll('iframe')[0]);
+        froogaloop.addEvent('finish',play_next_video);
+    }
+
+    function ready() {
+        setup_event_listners();
+    }
+
+    function embedVideo(video) {
+        document.getElementById('embed').innerHTML = unescape(video.html);
+
+        /**
+         * Utility function for adding an event. Handles the inconsistencies
+         * between the W3C method for adding events (addEventListener) and
+         * IE's (attachEvent).
+         */
+
+        // Listen for the ready event for any vimeo video players on the page
+        var vimeoPlayers = document.querySelectorAll('iframe'),
+            player;
+
+        for (var i = 0, length = vimeoPlayers.length; i < length; i++) {
+            player = vimeoPlayers[i];
+            console.warn(player);
+            $f(player).addEvent('ready', ready);
+        }
+    }
+
+    function set_nickname(){
+        nickname = document.getElementById('username').value;
+        if(nickname){
+            socket.emit('set nickname',nickname)
+            console.log('set nickname',nickname)
+        }else{
+            alert('need a name mothafucka!');
+        }
+    }
+
+    function join_room(room){
+        var room = room || document.getElementById('room').value;
+        if(room){
+            socket.emit('join room',room)
+            console.log('join room',room)
+        }else{
+            alert('need a room mothafucka!');
+        }
+    }
+    function leave_room(){
+        socket.emit('leave room');
+        $('#leave_room').hide();
+    }
+
+    function add_video(url){
+        socket.emit('add video', url);
+    }
+
+    function play_next_video(){
+        if(current_video){
+            old_video_queue.push(current_video);
+            current_video = null;
+        }
+        if(video_queue){
+            var video = video_queue.shift();
+
+            if(video){
+                current_video = video;
+
+                console.log('play_video',video);
+                // alert(data.current_video)
+
+                // This is the URL of the video you want to load
+                var videoUrl = video.url;
+
+                // This is the oEmbed endpoint for Vimeo (we're using JSON)
+                // (Vimeo also supports oEmbed discovery. See the PHP example.)
+                var endpoint = 'http://www.vimeo.com/api/oembed.json';
+
+                // Tell Vimeo what function to call
+                var callback = 'embedVideo';
+
+                // Put together the URL
+                var url = endpoint + '?url=' + encodeURIComponent(videoUrl) + '&callback=' + callback + '&width=640&autoplay=true&api=true';
+
+
+                // This function loads the data from Vimeo
+
+                document.getElementById('from').innerHTML = 'This video is brought to you by ' + video.from;
+
+                if(embed = document.getElementById('vimeo_embed')){
+                    document.getElementsByTagName('head').item(0).removeChild(embed);
+                }
+                var js = document.createElement('script');
+                js.setAttribute('type', 'text/javascript');
+                js.setAttribute('src', url);
+                js.setAttribute('id','vimeo_embed');
+                document.getElementsByTagName('head').item(0).appendChild(js);
+            }else{
+                alert('No more videos! Add one!');
+            }
+        }else{
+            alert('No more videos! Add one!');
+        }
+    }
+
+
+    function show_upcoming_video(){
+
+    }
+
+      socket = io.connect('/');
+      socket.on('list rooms',function(rooms){
+          console.log('rooms',rooms)
+          $('#rooms').empty();
+          $(rooms).each(function(i,room){
+              $('#rooms').append('<li class="x-join-room" data-room="' + room.name + '">' + room.name + ' (<span>' + room.count + '</span>)</li>');
+          });
+      });
+
+      socket.on('list room members',function(members){
+          $('#users-in-room').empty();
+          console.log(members)
+          $(members).each(function(i,member){
+              $('#users-in-room').append('<li>' + member + '</li>');
+          });
+      })
+
+      socket.on('update video queue',function(queue){
+          video_queue = queue;
+          console.log('video_queue',video_queue);
+          if($('iframe').length){
+              // play_next_video();
+          }else{
+              play_next_video();
+          }
+      });
+
+      socket.on('add video',function(video){
+          video_queue.push(video);
+          if(!current_video){
+              play_next_video();
+          }
+      });
+
+      socket.on('chat', function(message){
+          
+          console.warn('chat message',message);
+      })
+
+      socket.on('new room member',function(member){
+          if(member != nickname){
+              $('#users-in-room').prepend('<li>' + member + '</li>');
+          }
+      });
+
+      socket.on('member left room',function(member){
+          if(member == nickname){
+              $('#users-in-room').empty();
+              $('#current-room').empty();
+              $('#embed').empty();
+              current_video = false;
+              video_queue = [];
+              $('#add-video').hide();
+              $('#add-room').show();
+          }
+          console.log('member left room',member);
+      });
+
+      socket.on('nickname set',function(){
+          $('#set-nickname').hide();
+          $('#add-room').show();
+          // alert('nickname set');
+      });
+
+      socket.on('room joined',function(room){
+         $('#add-room').hide();
+         $('#add-video').show();
+         $('#leave_room').show();
+         $('#current-room').text(room);
+          // alert('room joined');
+      });
+
+      // socket.on('add video', function (video) {
+      //
+      // });
+    </script>
+</head>
+<body style="font-family: sans-serif;">
+  <div class="wrapper">
+    <div id="logo"></div>
+
+    <div id="embed"></div>
+    <div>
+        <form id="set-nickname" action="javascript: set_nickname()" style="display:inherit">
+            <input class="enter" type="text" name="username" value="" placeholder="Set Your Username!" id="username" >
+            <input class="submit" type="submit" value="Set username">
+        </form>
+
+        <form id="add-room" action="javascript: join_room()" style="display:none">
+            <input class="enter" type="text" name="username" value="" placeholder="Create or Enter a Room" id="room" >
+            <input class="submit" type="submit" value="Join room">
+        </form>
+
+        <form id="add-video" action="javascript: add_video(document.getElementById('new_video_url').value,document.getElementById('username').value)" style="display:none">
+            <input class="enter" type="text" name="new_video" value="" placeholder="Vimeo Video URL Here" id="new_video_url" >
+            <input class="submit" type="submit" value="Add video &rarr;">
+        </form>
+    </div>
+
+    <div id="couch"></div>
+
+
+
+  </div><!--wrapper-->
+
+  <div id="right_column">
+        <h3>Currently in room:<span id="current-room"></span>
+          <br />
+          <br />
+      <a id="leave_room" onclick="leave_room();" style="display:none;">Leave Room</a></h3>
+    <h3>Available Rooms:</h3>
+    <ul id="rooms">
+    </ul>
+    <h3>Room Members:</h3>
+    <ul id="users-in-room">
+    </ul>
+     <h3 id="from"></h3>
+    <div id="chat-pane">
+
+        <!-- <form id="chat-input" action="javascript: submit_chat()" style="display:inherit">
+                <input class="enter" type="text" name="username" value="" placeholder="chat" id="username" >
+                <input class="submit" type="submit" value="Set username">
+            </form>
+        </form> -->
+    </div>
+  </div>
+</body>
+</html>
