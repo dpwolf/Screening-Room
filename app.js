@@ -67,7 +67,7 @@ app.get('/oauth/callback', function(req, res){
 
       shelby.users(req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function(){console.log('error')}, function(data){
           console.log('users',data);
-          res.send('<pre>user connected \n' + data + '</pre>');
+          res.send('<pre>user connected \n' + data + '</pre>',500);
       })
 
       shelby.consumer().get("http://twitter.com/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response) {
