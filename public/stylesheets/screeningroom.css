@@ -303,4 +303,54 @@
 	background-image: url(../images/monster.png);
 }
 
+#avatar-box {
+	position: absolute;
+	height: 50px;
+	width: 50px;
+	border-radius:3px;
+	border: 2px solid #616a6d;
+	padding: 5px;
+	top: 25px;
+	left: 250px;
+	z-index: 1000;
+}
 
+.avatar{
+	width: 50px;
+	height: 50px;
+	background: url(../images/icon-cow.png) center center no-repeat;
+}
+
+.avatar.cow {
+	background-image: url(../images/icon-cow.png);
+}
+
+.avatar.bird {
+	background-image: url(../images/icon-bird.png);
+}
+
+.avatar.monster {
+	background-image: url(../images/icon-monster.png);
+}
+
+.avatar.monkey {
+	background-image: url(../images/icon-monkey.png);
+}
+
+.avatar-menu {
+	position: absolute;
+	background: #000;
+	width: 240px;
+	bottom: -50px;
+	left: 0;
+	border-radius:0 5px 5px 5px;
+	overflow: hidden;
+}
+.avatar-menu div {
+	float: left;
+	padding: 0 5px 0 5px;
+}
+
+.avatar-menu div:hover {
+	background-color: #61c5f8;
+}
