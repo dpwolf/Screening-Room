@@ -1,12 +1,13 @@
 {
-    "name": "application-name"
+    "name": "screening-room"
   , "version": "0.0.1"
   , "private": true
   , "dependencies": {
-      "express": "2.4.6"
+      "express": ">=2.4.6"
     , "jade": ">= 0.0.1"
-    , "socket.io": "0.7.10"
-    , "request": "2.1.1"
+    , "socket.io": ">= 0.7.10"
+    , "request": ">= 2.1.1"
     , "oauth": ">= 0.2.0"
+    , "sanitizer": ">= 0.0.14"
   }
 }
