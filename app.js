@@ -9,11 +9,13 @@ var express = require('express')
 // access tokens for dpwolf
 var access_token = 'jKFREQP8HAhsGQRuhaA3Jy1vdwotKYmTrz6A9P4W',
     access_token_secret = '09XQRL5gnS2CPJ1LCYVxJJYEMQMsNjAImug1U27A';
-    shelby.users(access_token, access_token_secret, function(error){
-        console.log('error',error);
-    }, function(data){
-        console.log('users data',data)
-    });
+
+    // get dpwolf's user info
+    // shelby.users(access_token, access_token_secret, function(error){
+    //     console.log('error',error);
+    // }, function(data){
+    //     console.log('users data',data)
+    // });
 
 // app.use(express.logger());
 app.use(express.bodyParser());
