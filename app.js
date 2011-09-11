@@ -171,7 +171,13 @@ function list_shelby_videos(socket){
                     console.log('error',error);
                 }, function(broadcasts){
                     var json = JSON.parse(broadcasts);
-                    socket.emit('shelby videos', json);
+                    var video_list = [];
+                    for(i=0;i<json.length;i++){
+                        if(json[i].video_provider_name == 'vimeo'){
+                            video_list.push(json[i]);
+                        }
+                    }
+                    socket.emit('shelby videos', video_list);
                 });
             });
         }
