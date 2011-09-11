@@ -16,7 +16,8 @@ exports.saveChatRoom = function(name, success, failure) {
 			debug.log(json)
 		}
 	}
-
+	// call apstrata
+	var a = 1
 	apstrata.call(attrs)
 }
 
