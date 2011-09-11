@@ -256,8 +256,9 @@ function show_upcoming_video(){
   socket.on('room joined',function(room){
      $('#add-room').hide();
      $('#add-video').show();
-     $('.list-view .rooms').hide();
-     $('.list-view .videos').show();
+     $('.list-view.rooms').hide();
+     $('.list-view.videos').show();
+     list-view videos
      $('#chat').show();
      $('#room-head .room-name').text(room);
      $('#room-head').show();
