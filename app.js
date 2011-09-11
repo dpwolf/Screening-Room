@@ -12,6 +12,21 @@ var express = require('express')
 var access_token = 'jKFREQP8HAhsGQRuhaA3Jy1vdwotKYmTrz6A9P4W',
     access_token_secret = '09XQRL5gnS2CPJ1LCYVxJJYEMQMsNjAImug1U27A';
 
+    credentials = {}
+    credentials.apstrata = {
+        key: "M261074715",
+        secret: "MEAF6122B07DFA4BEE598C245646C3C0"
+    }
+
+    //
+    // until i figure out a better way to debug, little debug function to keep console screen tidy
+    //  run node myApp.js | grep DEBUG-MSG
+    //
+    debug = {}
+    debug.log = function(msg) {
+    	console.log("DEBUG-MSG ", msg)
+    }
+
     // get dpwolf's user info
     // shelby.users(access_token, access_token_secret, function(error){
     //     console.log('error',error);
@@ -113,17 +128,56 @@ function leave_room(socket){
 }
 
 function list_rooms(socket){
-    var room_list = [];
-    for(rm in rooms){
-        if(rm && rooms[rm].members.length){
-            room_list.push({name:rm, count:rooms[rm].members.length});
-        }else{
-            delete rooms[rm];
+    // if (rooms === {}) {
+    //     persistence.listChatRooms(
+    //         function(savedRooms) {
+    //             console.log(savedRooms)
+    //             var room_list = [];
+    //             for (var i=0; i<savedRooms.length; i++) {
+    //                 rooms[savedRooms[i]] = {members: [], videos: []}
+    //             }
+    //             
+    //         }, 
+    //         function(err) {console.log(err)}
+    //     );
+    // }else{
+        var room_list = [];
+        for(rm in rooms){
+            if(rm && rooms[rm].members.length){
+                room_list.push({name:rm, count:rooms[rm].members.length});
+            }else{
+                delete rooms[rm];
+            }
         }
-    }
-    socket.emit('list rooms',room_list);
-    socket.broadcast.emit('list rooms',room_list);
+        socket.emit('list rooms',room_list);
+        socket.broadcast.emit('list rooms',room_list);
+    // }
+ 
 }
+
+function list_shelby_videos(socket){
+    socket.get('oauth_token&secret', function(err, oauthandsecret){
+        if(!err){
+            var oauth_token = oauthandsecret.split('&')[0];
+            var oauth_token_secret = oauthandsecret.split('&')[1];
+            console.log(oauth_token, oauth_token_secret, '     !!');
+            shelby.channels(oauth_token, oauth_token_secret, function(error){
+                console.log('error',error);
+            }, function(channels){
+                console.log('channels',channels);
+                var id = JSON.parse(channels)[1]['_id'];
+                console.log('id',id);
+                shelby.channel_broadcasts(id, oauth_token, oauth_token_secret, function(error){
+                    console.log('error',error);
+                }, function(broadcasts){
+                    var json = JSON.parse(broadcasts);
+                    socket.emit('shelby videos', json);
+                });
+            });
+        }
+    });
+}
+
 
 io.sockets.on('connection', function (socket) {
     list_rooms(socket);
@@ -134,6 +188,7 @@ io.sockets.on('connection', function (socket) {
                 console.log('***********nickname set:', info.nickname)
                 socket.set('oauth_token&secret', info.oauth_token + '&' + info.oauth_token_secret, function () {
                     socket.emit('nickname set');
+                    list_shelby_videos(socket);
                 });
 
             });
@@ -194,11 +249,16 @@ io.sockets.on('connection', function (socket) {
                             rooms[room] = {members:[nickname],videos:[]};
                         }
                     }
-
+                    persistence.saveChatRoom(room, function(json) {
+                        console.log('saved chat room',json)
+                    }, function(json) {
+                        console.log('error saving chat room');
+                    });
                     socket.emit('room joined', room);
                     list_rooms(socket);
                     socket.emit('list room members',rooms[room].members);
-                    socket.broadcast.to(room).emit('new room member', nickname);                }
+                    socket.broadcast.to(room).emit('new room member', nickname);
+                }
             }
         })
     })
