@@ -200,6 +200,10 @@ io.sockets.on('connection', function (socket) {
         leave_room(socket);
     })
     
+    socket.on('get shelby user',function(){
+        console.log('get shelby user');
+    });
+    
     // socket.send('room_name',{ current_video: 'http://vimeo.com/10866394' });
     socket.on('add video', function (url) {
         
