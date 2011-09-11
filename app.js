@@ -31,7 +31,7 @@ app.configure(function(){
 });
 
 
-app.listen(1080);
+app.listen(80);
 
 app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');
