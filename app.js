@@ -5,7 +5,8 @@ var express = require('express')
     , sys = require('sys')
     , shelby = require('./lib/shelby_api')
     , sanitizer = require('sanitizer')
-    , persistence = require('persistence.js')
+    , apstrata = require('./lib/apstrata')
+    , persistence = require('./persistence.js')
 
 // access tokens for dpwolf
 var access_token = 'jKFREQP8HAhsGQRuhaA3Jy1vdwotKYmTrz6A9P4W',
