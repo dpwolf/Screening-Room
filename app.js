@@ -167,32 +167,34 @@ io.sockets.on('connection', function (socket) {
                 // var rooms = io.sockets.manager.rooms;
                 // console.log('*********io',io.sockets.manager)
 
-                socket.get('room', function(err,oldroom){
-                    if(err){
-                        console.log(err);
-                    }else{
-                        if(oldroom){
-                            leave_room(socket);
+                room = sanitizer.sanitize(room);
+                if(room){
+                    socket.get('room', function(err,oldroom){
+                        if(err){
+                            console.log(err);
+                        }else{
+                            if(oldroom){
+                                leave_room(socket);
+                            }
+                        }
+                    })
+
+                    socket.join(room);
+                    socket.set('room', room);
+                    console.log('***********room:',room);
+
+                    if(rooms){
+                        if(rooms[room]){
+                            rooms[room].members.push(nickname);
+                        }else{
+                            rooms[room] = {members:[nickname],videos:[]};
                         }
                     }
-                })
 
-                socket.join(room);
-                socket.set('room', room);
-                console.log('***********room:',room);
-
-                if(rooms){
-                    if(rooms[room]){
-                        rooms[room].members.push(nickname);
-                    }else{
-                        rooms[room] = {members:[nickname],videos:[]};
-                    }
-                }
-
-                socket.emit('room joined', room);
-                list_rooms(socket);
-                socket.emit('list room members',rooms[room].members);
-                socket.broadcast.to(room).emit('new room member', nickname);
+                    socket.emit('room joined', room);
+                    list_rooms(socket);
+                    socket.emit('list room members',rooms[room].members);
+                    socket.broadcast.to(room).emit('new room member', nickname);                }
             }
         })
     })
