@@ -1,8 +1,7 @@
 $(document).ready(function(){
-    if(window.location.hash.indexOf('oauth_token')){
+    if(window.location.hash.indexOf('oauth_token') > -1){
         $('#log-in').hide();
         $('#set-nickname').show();
-        // 
     }
     
     $('#log-in').live('submit',function(){
