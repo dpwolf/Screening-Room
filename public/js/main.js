@@ -235,10 +235,14 @@ function show_upcoming_video(){
       // alert('nickname set');
   });
 
-  socket.on('shelby videos',function(json){
-      console.warn('shelby videos',json);
-      js = json;
-  })
+  socket.on('shelby videos',function(videos){
+      console.warn('shelby videos',videos);
+      js = videos;
+      
+      for(var i=0; i<videos.length; i++){
+          $('.list-view ul').append('<li><div class="thumb"><div class="thumb-content"><img src="' + videos[i].video_thumbnail_url + '" /></div></div><div class="desc">' + videos[i].description + '</div><div class="clear"></div></li>').data('shelby_obj',videos[i]);
+      }
+  });
 
   socket.on('room joined',function(room){
      $('#add-room').hide();
