@@ -4,13 +4,13 @@ $(document).ready(function(){
         // window.location.hash = '';
         var oauth_token = params_array[0].split('=')[1];
         var oauth_token_secret = params_array[1].split('=')[1];
-        // var nickname = params_array[2].split('=')[1];
+        var nickname = params_array[2] && params_array[2].split('=')[1] || '';
         $('#oauth_token').val(oauth_token);
         $('#oauth_token_secret').val(oauth_token_secret);
-        // $('#username').val(nickname);
+        $('#username').val(nickname);
         $('#log-in').hide();
         $('#set-nickname').show();
-        // window.location.hash = '';
+        window.location.hash = '';
     }
     
     $('#log-in').live('submit',function(){
