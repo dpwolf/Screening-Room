@@ -159,6 +159,9 @@ function play_next_video(){
 
             // This function loads the data from Vimeo
 
+            $('.queue-box .user-name').text(video.from);
+            $('.queue-box .video-name').text(video.title);
+            
             // document.getElementById('from').innerHTML = 'This video is brought to you by ' + video.from;
 
             if(embed = document.getElementById('vimeo_embed')){
