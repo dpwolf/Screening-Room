@@ -119,7 +119,10 @@ function join_room(room){
 }
 function leave_room(){
     socket.emit('leave room');
-    $('#room-head').hide()
+    $('.list-view.rooms').show();
+    $('.list-view.videos').hide();
+    $('#room-head').hide();
+    $('#add-room').show().find('.room-name').val('');
 }
 
 function add_video(url){
@@ -185,7 +188,7 @@ function show_upcoming_video(){
       $(rooms).each(function(i,room){
           $('.list-view ul.rooms').empty().append($('<li class="x-join-room" data-room="' + room.name + '"><div class="thumb"><div class="thumb-content">' + room.count + '</div></div><div class="desc">' + room.name + '</div><div class="clear"></div></li>'));
       });
-      $('.list-view.rooms').show();
+      // $('.list-view.rooms').show();
   });
 
   socket.on('list room members',function(members){
@@ -254,6 +257,7 @@ function show_upcoming_video(){
   });
 
   socket.on('room joined',function(room){
+      console.warn('room joined',room)
      $('#add-room').hide();
      $('#add-video').show();
      $('.list-view.rooms').hide();
