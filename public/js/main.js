@@ -40,7 +40,10 @@ $(document).ready(function(){
         return false;
     });
     
-    
+    $('.clickable-video').live('click',function(){
+        var shelby_obj = $(this).data('shelby_obj');
+        socket.emit('add video', 'http://www.vimeo.com/' + shelby_obj.video_id_at_provider);
+    });
 })
 
 
@@ -240,7 +243,7 @@ function show_upcoming_video(){
       js = videos;
       
       for(var i=0; i<videos.length; i++){
-          $('.list-view ul').append('<li><div class="thumb"><div class="thumb-content"><img src="' + videos[i].video_thumbnail_url + '" /></div></div><div class="desc">' + videos[i].description + '</div><div class="clear"></div></li>').data('shelby_obj',videos[i]);
+          $('.list-view ul').append($('<li class="clickable-video"><div class="thumb"><div class="thumb-content"><img src="' + videos[i].video_thumbnail_url + '" /></div></div><div class="desc">' + videos[i].description + '</div><div class="clear"></div></li>').data('shelby_obj',videos[i]));
       }
   });
 
