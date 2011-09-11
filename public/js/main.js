@@ -97,9 +97,9 @@ function embedVideo(video) {
 }
 
 function set_nickname(){
-    nickname = document.getElementById('username').value;
-    var oauth_token = document.getElementById('oauth_token').value;
-    var oauth_token_secret = document.getElementById('oauth_token_secret').value;
+    nickname = $('#username').val();
+    var oauth_token = $('#oauth_token').val();
+    var oauth_token_secret = $('#oauth_token_secret').val();
     if(nickname){
         socket.emit('set nickname',{"nickname":nickname,"oauth_token":oauth_token,"oauth_token_secret":oauth_token_secret})
         console.log('set nickname',nickname)
