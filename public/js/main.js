@@ -1,8 +1,8 @@
 $(document).ready(function(){
-    if(window.location.search == '?success=true'){
+    if(window.location.hash.indexOf('oauth_token')){
         $('#log-in').hide();
-        alert('connected!');
-        socket.emit('get shelby user');
+        $('#set-nickname').show();
+        // 
     }
     
     $('#log-in').live('submit',function(){
