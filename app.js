@@ -69,7 +69,7 @@ app.get('/oauth/callback', function(req, res){
       req.session.oauthAccessTokenSecret = oauthAccessTokenSecret;
 
       shelby.users(req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function(){console.log('error')}, function(data){
-          res.redirect('/#oauth_token=' + oauthAccessToken + '&oauth_token_secret=' + oauthAccessTokenSecret + "&name=" + JSON.parse(data).nickname);
+          res.redirect('/#oauth_token=' + oauthAccessToken + '&oauth_token_secret=' + oauthAccessTokenSecret + "&name=" + JSON.parse(data)[0].nickname);
       })
     }
     });
