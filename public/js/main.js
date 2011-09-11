@@ -252,7 +252,16 @@ function show_upcoming_video(){
       js = videos;
       
       for(var i=0; i<videos.length; i++){
-          $('.list-view ul.videos').append($('<li class="clickable-video"><div class="thumb"><div class="thumb-content"><img src="' + videos[i].video_thumbnail_url + '" /></div></div><div class="desc">' + videos[i].description + '</div><div class="clear"></div></li>').data('shelby_obj',videos[i]));
+          if(videos[i].video_thumbnail_url){
+              $('.list-view ul.videos').append(
+                  $('<li class="clickable-video"><div class="thumb"><div class="thumb-content"><img src="' + videos[i].video_thumbnail_url + '" /></div></div><div class="desc">' + videos[i].description + '</div><div class="clear"></div></li>').data('shelby_obj',videos[i])
+              );
+          }else{
+              $('.list-view ul.videos').append(
+                  $('<li class="clickable-video"><div class="thumb"><div class="thumb-content"></div></div><div class="desc">' + videos[i].description + '</div><div class="clear"></div></li>').data('shelby_obj',videos[i])
+              );
+          }
+
       }
   });
 
