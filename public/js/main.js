@@ -258,7 +258,6 @@ function show_upcoming_video(){
      $('#add-video').show();
      $('.list-view.rooms').hide();
      $('.list-view.videos').show();
-     list-view videos
      $('#chat').show();
      $('#room-head .room-name').text(room);
      $('#room-head').show();
