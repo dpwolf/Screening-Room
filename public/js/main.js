@@ -12,7 +12,15 @@ $(document).ready(function(){
         }else{
             alert('Please choose a nickname before you join a room');
         }
-    })
+    });
+    
+    $('#chat-input').live('submit',function(){
+        if(socket){
+            socket.emit('chat',$('#chat-input input').val());
+            $('#chat-input input').val('');
+        }
+        return false;
+    });
 })
 
 

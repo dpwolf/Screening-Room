@@ -28,17 +28,17 @@
     			<div class="avatar monster"></div>
     		</div>
     	</div>
-        <form id="set-nickname" action="javascript: set_nickname()" style="display:inherit">
+        <form class="top-form" id="set-nickname" action="javascript: set_nickname()" style="display:inherit">
             <input class="enter" type="text" name="username" value="" placeholder="Set Your Username!" id="username" >
             <input class="submit" type="submit" value="Set username">
         </form>
 
-        <form id="add-room" action="javascript: join_room()" style="display:none">
+        <form class="top-form" id="add-room" action="javascript: join_room()" style="display:none">
             <input class="enter" type="text" name="username" value="" placeholder="Create or Enter a Room" id="room" >
             <input class="submit" type="submit" value="Join room">
         </form>
 
-        <form id="add-video" action="javascript: add_video(document.getElementById('new_video_url').value,document.getElementById('username').value)" style="display:none">
+        <form class="top-form" id="add-video" action="javascript: add_video(document.getElementById('new_video_url').value,document.getElementById('username').value)" style="display:none">
             <input class="enter" type="text" name="new_video" value="" placeholder="Vimeo Video URL Here" id="new_video_url" >
             <input class="submit" type="submit" value="Add video &rarr;">
         </form>
@@ -282,9 +282,9 @@
                 </div>
                 
                 <div class="chat-input chrome">
-                
-                    <input type="text" name="" placeholder="Chat here." />
-                    
+                    <form id="chat-input">
+                        <input type="text" name="" placeholder="Chat here." />
+                    </form>
                 </div>
             
             </div>
