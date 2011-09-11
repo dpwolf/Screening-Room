@@ -4,6 +4,7 @@ var express = require('express')
     , OAuth = require('oauth').OAuth
     , sys = require('sys')
     , shelby = require('./lib/shelby_api')
+    , sanitizer = require('sanitizer')
 
 // access tokens for dpwolf
 var access_token = 'jKFREQP8HAhsGQRuhaA3Jy1vdwotKYmTrz6A9P4W',
@@ -144,8 +145,8 @@ io.sockets.on('connection', function (socket) {
                     if(err){
                         console.log('****** room error',err);
                     }else{
-                        socket.emit('chat',{from:nickname,message:message});
-                        socket.broadcast.to(room).emit('chat', {from:nickname,message:message});
+                        socket.emit('chat',{from:nickname,message:sanitizer.sanitize(message)});
+                        socket.broadcast.to(room).emit('chat', {from:nickname,message:sanitizer.sanitize(message)});
                     }
                 });
             }

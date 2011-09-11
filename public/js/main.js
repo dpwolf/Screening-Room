@@ -184,7 +184,7 @@ function show_upcoming_video(){
   });
 
   socket.on('chat', function(message){
-      
+      $('.chat-display').append('<p><span class="u-name red">' + message.from + ': </span>' + message.message + '</p>');
       console.warn('chat message',message);
   })
 
