@@ -127,12 +127,12 @@
                 var callback = 'embedVideo';
 
                 // Put together the URL
-                var url = endpoint + '?url=' + encodeURIComponent(videoUrl) + '&callback=' + callback + '&width=640&autoplay=true&api=true';
+                var url = endpoint + '?url=' + encodeURIComponent(videoUrl) + '&callback=' + callback + '&width=640&height=360&autoplay=true&api=true';
 
 
                 // This function loads the data from Vimeo
 
-                document.getElementById('from').innerHTML = 'This video is brought to you by ' + video.from;
+                // document.getElementById('from').innerHTML = 'This video is brought to you by ' + video.from;
 
                 if(embed = document.getElementById('vimeo_embed')){
                     document.getElementsByTagName('head').item(0).removeChild(embed);
