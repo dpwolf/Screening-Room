@@ -158,7 +158,7 @@ function play_next_video(){
 
 
             // This function loads the data from Vimeo
-
+            $('.queue-bar').show();
             $('.queue-box .user-name').text(video.from);
             $('.queue-box .video-name').text(video.title);
             
