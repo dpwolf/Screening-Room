@@ -196,13 +196,14 @@
 	color: #383838;
 }
 
-.search-input input {	
-	display:block;
-	width: 205px;
-	border: 1px solid #898989;
-	height: 30px;
-	color: #383838;
-	font-size: 15px;
+.search-input input, #search_vid {	
+	display:block !important;
+	width: 205px !important;
+	border: 1px solid #898989 !important;
+	height: 30px !important;
+	color: #383838 !important;
+	font-size: 15px !important;
+	border-radius:0 !important;
 }
 
 .queue-bar {
