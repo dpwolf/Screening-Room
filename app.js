@@ -128,11 +128,15 @@ function list_rooms(socket){
 io.sockets.on('connection', function (socket) {
     list_rooms(socket);
 
-    socket.on('set nickname', function (name) {
-        if(sanitizer.sanitize(name)){
-            socket.set('nickname', sanitizer.sanitize(name), function () {
-                console.log('***********nickname set:', name)
+    socket.on('set nickname', function (info) {
+        if(sanitizer.sanitize(info.nickname)){
+            socket.set('nickname', sanitizer.sanitize(info.nickname), function () {
+                console.log('***********nickname set:', info.nickname)
                 socket.emit('nickname set');
+            });
+            socket.set('oauth_token', sanitizer.sanitize(info.oauth_token), function () {
+            });
+            socket.set('oauth_token_secret', sanitizer.sanitize(info.oauth_token_secret), function () {
             });
         }
     });

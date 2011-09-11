@@ -5,7 +5,7 @@ $(document).ready(function(){
         var oauth_token = params_array[0].split('=')[1];
         var oauth_token_secret = params_array[1].split('=')[1];
         var nickname = params_array[2].split('=')[1];
-        $('#oauth_token_secret').val(oauth_token);
+        $('#oauth_token').val(oauth_token);
         $('#oauth_token_secret').val(oauth_token_secret);
         $('#username').val(nickname);
         $('#log-in').hide();
@@ -89,8 +89,10 @@ function embedVideo(video) {
 
 function set_nickname(){
     nickname = document.getElementById('username').value;
+    var oauth_token = document.getElementById('oauth_token').value;
+    var oauth_token_secret = document.getElementById('oauth_token_secret').value;
     if(nickname){
-        socket.emit('set nickname',nickname)
+        socket.emit('set nickname',{"nickname":nickname,"oauth_token":oauth_token,"oauth_token_secret":oauth_token_secret})
         console.log('set nickname',nickname)
     }else{
         alert('need a name mothafucka!');
