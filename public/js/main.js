@@ -182,10 +182,10 @@ function show_upcoming_video(){
   socket = io.connect('/');
   socket.on('list rooms',function(rooms){
       console.log('rooms',rooms)
-      $('#rooms').empty();
       $(rooms).each(function(i,room){
           $('.list-view ul.rooms').empty().append($('<li class="x-join-room" data-room="' + room.name + '"><div class="thumb"><div class="thumb-content">' + room.count + '</div></div><div class="desc">' + room.name + '</div><div class="clear"></div></li>'));
       });
+      $('.list-view.rooms').show();
   });
 
   socket.on('list room members',function(members){
