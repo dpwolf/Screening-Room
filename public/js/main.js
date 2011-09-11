@@ -243,6 +243,7 @@ function show_upcoming_video(){
   socket.on('nickname set',function(){
       $('#set-nickname').hide();
       $('#add-room').show();
+      $('.list-view.rooms').show();
       $('#right_column .sidebar').show();
       // alert('nickname set');
   });
