@@ -42,7 +42,12 @@ $(document).ready(function(){
     
     $('.clickable-video').live('click',function(){
         var shelby_obj = $(this).data('shelby_obj');
-        socket.emit('add video', 'http://www.vimeo.com/' + shelby_obj.video_id_at_provider);
+        if(shelby_obj.video_provider_name == 'vimeo'){
+            socket.emit('add video', 'http://www.vimeo.com/' + shelby_obj.video_id_at_provider);
+        }else{
+            alert('sorry, only vimeo videos right now');
+        }
+
     });
 })
 
