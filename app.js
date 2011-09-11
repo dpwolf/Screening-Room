@@ -5,6 +5,7 @@ var express = require('express')
     , sys = require('sys')
     , shelby = require('./lib/shelby_api')
     , sanitizer = require('sanitizer')
+    , persistence = require('persistence.js')
 
 // access tokens for dpwolf
 var access_token = 'jKFREQP8HAhsGQRuhaA3Jy1vdwotKYmTrz6A9P4W',
@@ -30,7 +31,7 @@ app.configure(function(){
 });
 
 
-app.listen(80);
+app.listen(1080);
 
 app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');
