@@ -132,29 +132,31 @@ io.sockets.on('connection', function (socket) {
     list_rooms(socket);
 
     socket.on('set nickname', function (name) {
-        socket.set('nickname', name, function () {
-            console.log('***********nickname set:', name)
-            socket.emit('nickname set');
-        });
+        if(sanitizer.sanitize(name)){
+            socket.set('nickname', sanitizer.sanitize(name), function () {
+                console.log('***********nickname set:', name)
+                socket.emit('nickname set');
+            });
+        }
     });
     socket.on('chat',function(message){
-        socket.get('nickname', function(err, nickname){
-            if(err){
-                console.log('****** nickname error');
-                console.log(err);
-            }else{
-                socket.get('room', function(err, room){
-                    if(err){
-                        console.log('****** room error',err);
-                    }else{
-                        socket.emit('chat',{from:nickname,message:sanitizer.sanitize(message)});
-                        socket.broadcast.to(room).emit('chat', {from:nickname,message:sanitizer.sanitize(message)});
-                    }
-                });
-            }
-       });
-       
-       
+        if(sanitizer.sanitize(message)){
+             socket.get('nickname', function(err, nickname){
+                 if(err){
+                     console.log('****** nickname error');
+                     console.log(err);
+                 }else{
+                     socket.get('room', function(err, room){
+                         if(err){
+                             console.log('****** room error',err);
+                         }else{
+                             socket.emit('chat',{from:nickname,message:sanitizer.sanitize(message)});
+                             socket.broadcast.to(room).emit('chat', {from:nickname,message:sanitizer.sanitize(message)});
+                         }
+                     });
+                 }
+            });
+        }
     });
 
     socket.on('join room', function(room){
