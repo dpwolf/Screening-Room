@@ -132,11 +132,10 @@ io.sockets.on('connection', function (socket) {
         if(sanitizer.sanitize(info.nickname)){
             socket.set('nickname', sanitizer.sanitize(info.nickname), function () {
                 console.log('***********nickname set:', info.nickname)
-                socket.emit('nickname set');
-            });
-            socket.set('oauth_token', sanitizer.sanitize(info.oauth_token), function () {
-            });
-            socket.set('oauth_token_secret', sanitizer.sanitize(info.oauth_token_secret), function () {
+                socket.set('oauth_token&secret', info.oauth_token + '&' + info.oauth_token_secret, function () {
+                    socket.emit('nickname set');
+                });
+
             });
         }
     });

@@ -10,6 +10,7 @@ $(document).ready(function(){
         $('#username').val(nickname);
         $('#log-in').hide();
         $('#set-nickname').show();
+        window.location.hash = '';
     }
     
     $('#log-in').live('submit',function(){
