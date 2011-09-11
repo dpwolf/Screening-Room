@@ -255,11 +255,11 @@ io.sockets.on('connection', function (socket) {
                             rooms[room] = {members:[nickname],videos:[]};
                         }
                     }
-                    persistence.saveChatRoom(room, function(json) {
-                        console.log('saved chat room',json)
-                    }, function(json) {
-                        console.log('error saving chat room');
-                    });
+                    // persistence.saveChatRoom(room, function(json) {
+                    //     console.log('saved chat room',json)
+                    // }, function(json) {
+                    //     console.log('error saving chat room');
+                    // });
                     socket.emit('room joined', room);
                     list_rooms(socket);
                     socket.emit('list room members',rooms[room].members);
