@@ -1,5 +1,13 @@
 $(document).ready(function(){
     if(window.location.hash.indexOf('oauth_token') > -1){
+        var params_array = window.location.hash.replace('#','').split('&');
+        // window.location.hash = '';
+        var oauth_token = params_array[0].split('=')[1];
+        var oauth_token_secret = params_array[1].split('=')[1];
+        var nickname = params_array[2].split('=')[1];
+        $('#oauth_token_secret').val(oauth_token);
+        $('#oauth_token_secret').val(oauth_token_secret);
+        $('#username').val(nickname);
         $('#log-in').hide();
         $('#set-nickname').show();
     }

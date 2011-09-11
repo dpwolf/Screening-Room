@@ -67,15 +67,10 @@ app.get('/oauth/callback', function(req, res){
 
       req.session.oauthAccessToken = oauthAccessToken;
       req.session.oauthAccessTokenSecret = oauthAccessTokenSecret;
-      // Right here is where we would write out some nice user stuff
-      // res.send('yo',500);
 
-      res.redirect('/#oauth_token=' + oauthAccessToken + '&oauth_token_secret=' + oauthAccessTokenSecret);
-
-      // shelby.users(req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function(){console.log('error')}, function(data){
-      //     console.log('users',data);
-      //     res.send('<pre>user connected \n' + data + '</pre>',500);
-      // })
+      shelby.users(req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function(){console.log('error')}, function(data){
+          res.redirect('/#oauth_token=' + oauthAccessToken + '&oauth_token_secret=' + oauthAccessTokenSecret + "&name=" + JSON.parse(data).nickname);
+      })
     }
     });
 });
