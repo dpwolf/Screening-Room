@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Video</title>
+    <title>Screening Room</title>
     <script type='text/javascript' src="/socket.io/socket.io.js"></script>
     <script type='text/javascript' src="/js/jquery-1.6.2.min.js"></script>
     <script type='text/javascript' src="/js/froogaloop2.min.js"></script>
@@ -19,7 +19,7 @@
     <div id="embed"></div>
     <div>
         <form class="top-form" id="log-in" style="display:inherit">
-            <input class="submit" type="submit" value="Log in via Shelby.tv">
+            <input class="submit" type="submit" value="Log in with Shelby.tv">
         </form>
 
         <form class="top-form" id="set-nickname" style="display:none">
@@ -36,11 +36,6 @@
                     <div class="avatar monster"></div>
                 </div>
             </div>
-        </form>
-
-        <form class="top-form" id="add-room" action="javascript: join_room()" style="display:none">
-            <input class="enter" type="text" name="username" value="" placeholder="Create or Enter a Room" id="room" >
-            <input class="submit" type="submit" value="Join room">
         </form>
 
         <form class="top-form" id="add-video" action="javascript: add_video(document.getElementById('new_video_url').value,document.getElementById('username').value)" style="display:none">
@@ -113,154 +108,54 @@
 
   <div id="right_column">
   
-        <div class="sidebar">
+        <div class="sidebar" style="display:none;">
                     
                 <div class="sb-header chrome">
             
-                <div class="new-room" style="display:none;">Create Room</div>
+                <!-- <div class="new-room" style="display:none;">Create Room</div> -->
+                <form id="add-room" action="javascript: join_room()" style="display:none">
+                    <input class="room-name" type="text" name="" placeholder="Room Name">
+                    <input class="new-room" type="submit" value="Create new room">
+                </form>
                 
-                <div id="room-head">
+                
+                
+                <div id="room-head" style="display:none;">
                 
                     <div class="room-title">
                         
-                        <input class="room-name" type="text" name="" value="Room Name" />
+                        <div class="room-name">Room Name</div>
                     
                     </div>
                     
-                    <div class="exit-room">EXIT</div>
+                    <div class="exit-room" onclick="leave_room();">EXIT</div>
                 
                 </div>
             
             </div>
             
-            <div class="list-view">
-                
+            <div class="list-view rooms" style="display:none;">
+                <ul class="rooms">
+                </ul>
+            </div>
+
+            <div class="divider chrome"></div>
+
+            <div class="list-view videos" style="display:none;">
+                <h2>Videos</h2>
                 <div class="search-input">
                 
                     <input type="text" name="" value="Search Video or URL" />
                     
                 </div>
                 
-                <ul>
-                    
-<!--                     <li>
-                    
-                        <div class="thumb">
-                        
-                            <div class="thumb-content">
-                             
-                              <img src="thumb.jpg"  height="45"/>
-                            
-                            </div>
-                            
-                        </div>
-                        
-                        <div class="desc">
-                            
-                            Dave's Room
-                                
-                        </div>
-                        
-                        <div class="clear"></div>
-                        
-                    </li>
-                    
-                    <li>
-                    
-                        <div class="thumb">
-                        
-                            <div class="thumb-content">
-                             
-                              <img src="thumb.jpg"  height="45"/>
-                            
-                            </div>
-                            
-                        </div>
-                        
-                        <div class="desc">
-                            
-                            Dave's Room
-                                
-                        </div>
-                        
-                        <div class="clear"></div>
-                        
-                    </li>
-                
-                    <li>
-                    
-                        <div class="thumb">
-                        
-                            <div class="thumb-content">
-                             
-                             23
-                            
-                            </div>
-                            
-                        </div>
-                        
-                        <div class="desc">
-                            
-                            Dave's Room
-                                
-                        </div>
-                        
-                        <div class="clear"></div>
-                        
-                    </li>
-                
-                    <li>
-                    
-                        <div class="thumb">
-                        
-                            <div class="thumb-content">
-                             
-                             23
-                            
-                            </div>
-                            
-                        </div>
-                        
-                        <div class="desc">
-                            
-                            Dave's Room
-                                
-                        </div>
-                        
-                        <div class="clear"></div>
-                        
-                    </li>
-                
-                    <li>
-                    
-                        <div class="thumb">
-                        
-                            <div class="thumb-content">
-                             
-                             23
-                            
-                            </div>
-                            
-                        </div>
-                        
-                        <div class="desc">
-                            
-                            Dave's Room
-                                
-                        </div>
-                        
-                        <div class="clear"></div>
-                        
-                    </li> 
-                -->
-                
+                <ul class="videos">
                 </ul>
-                
             </div>
-                
+            
             <div class="divider chrome"></div>
             
-            <div id="chat">
+            <div id="chat" style="display:none;">
             
                 <div class="chat-box">
                     

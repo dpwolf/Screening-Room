@@ -109,7 +109,7 @@ function set_nickname(){
 }
 
 function join_room(room){
-    var room = room || document.getElementById('room').value;
+    var room = room || $('#add-room .room-name').val();
     if(room){
         socket.emit('join room',room)
         console.log('join room',room)
@@ -119,7 +119,7 @@ function join_room(room){
 }
 function leave_room(){
     socket.emit('leave room');
-    $('#leave_room').hide();
+    $('#room-head').hide()
 }
 
 function add_video(url){
@@ -184,7 +184,7 @@ function show_upcoming_video(){
       console.log('rooms',rooms)
       $('#rooms').empty();
       $(rooms).each(function(i,room){
-          $('#rooms').append('<li class="x-join-room" data-room="' + room.name + '">' + room.name + ' (<span>' + room.count + '</span>)</li>');
+          $('.list-view ul.rooms').empty().append($('<li class="x-join-room" data-room="' + room.name + '"><div class="thumb"><div class="thumb-content">' + room.count + '</div></div><div class="desc">' + room.name + '</div><div class="clear"></div></li>'));
       });
   });
 
@@ -240,6 +240,7 @@ function show_upcoming_video(){
   socket.on('nickname set',function(){
       $('#set-nickname').hide();
       $('#add-room').show();
+      $('#right_column .sidebar').show();
       // alert('nickname set');
   });
 
@@ -248,15 +249,19 @@ function show_upcoming_video(){
       js = videos;
       
       for(var i=0; i<videos.length; i++){
-          $('.list-view ul').append($('<li class="clickable-video"><div class="thumb"><div class="thumb-content"><img src="' + videos[i].video_thumbnail_url + '" /></div></div><div class="desc">' + videos[i].description + '</div><div class="clear"></div></li>').data('shelby_obj',videos[i]));
+          $('.list-view ul.videos').append($('<li class="clickable-video"><div class="thumb"><div class="thumb-content"><img src="' + videos[i].video_thumbnail_url + '" /></div></div><div class="desc">' + videos[i].description + '</div><div class="clear"></div></li>').data('shelby_obj',videos[i]));
       }
   });
 
   socket.on('room joined',function(room){
      $('#add-room').hide();
      $('#add-video').show();
+     $('.list-view .rooms').hide();
+     $('.list-view .videos').show();
+     $('#chat').show();
+     $('#room-head .room-name').text(room);
+     $('#room-head').show();
      $('#leave_room').show();
-     $('#current-room').text(room);
       // alert('room joined');
   });
 
