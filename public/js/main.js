@@ -1,5 +1,6 @@
 $(document).ready(function(){
     if(window.location.search == '?success=true'){
+        $('#log-in').hide();
         alert('connected!');
         socket.emit('get shelby user');
     }
