@@ -4,6 +4,15 @@ $(document).ready(function(){
         socket.emit('get shelby user');
     }
     
+    $('#log-in').live('submit',function(){
+        window.location.pathname = 'connect';
+        return false;
+    });
+
+    $('#set-nickname').live('submit',function(){
+        set_nickname();
+        return false;
+    });
     
     $('.x-join-room').live('click',function(){
         if(nickname){
@@ -21,6 +30,8 @@ $(document).ready(function(){
         }
         return false;
     });
+    
+    
 })
 
 

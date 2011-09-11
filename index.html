@@ -18,19 +18,22 @@
 
     <div id="embed"></div>
     <div>
-    	<div id="avatar-box" class="chrome">
-    		<div class="avatar bird"></div>
-    		
-    		<div class="avatar-menu">
-    			<div class="avatar monkey"></div>
-    			<div class="avatar bird"></div>
-    			<div class="avatar cow"></div>
-    			<div class="avatar monster"></div>
-    		</div>
-    	</div>
-        <form class="top-form" id="set-nickname" action="javascript: set_nickname()" style="display:inherit">
+        <form class="top-form" id="log-in" style="display:inherit">
+            <input class="submit" type="submit" value="Log in via Shelby.tv">
+        </form>
+
+        <form class="top-form" id="set-nickname" style="display:none">
             <input class="enter" type="text" name="username" value="" placeholder="Set Your Username!" id="username" >
             <input class="submit" type="submit" value="Set username">
+            <div id="avatar-box" class="chrome">
+                <div class="avatar bird"></div>
+                <div class="avatar-menu">
+                    <div class="avatar monkey"></div>
+                    <div class="avatar bird"></div>
+                    <div class="avatar cow"></div>
+                    <div class="avatar monster"></div>
+                </div>
+            </div>
         </form>
 
         <form class="top-form" id="add-room" action="javascript: join_room()" style="display:none">

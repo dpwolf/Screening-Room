@@ -304,14 +304,13 @@
 }
 
 #avatar-box {
-	position: absolute;
+	position: relative;
 	height: 50px;
 	width: 50px;
 	border-radius:3px;
 	border: 2px solid #616a6d;
 	padding: 5px;
 	top: 25px;
-	left: 250px;
 	z-index: 1000;
 }
 
