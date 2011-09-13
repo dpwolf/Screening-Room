@@ -361,3 +361,16 @@
 .avatar-menu div:hover {
 	background-color: #61c5f8;
 }
+
+
+.credits {
+    text-align: right;
+    color: white;
+}
+.credits a{
+    color:#CCC;
+    text-decoration:none;
+}
+.credits a:hover;{
+    text-decoration:underline;
+}
