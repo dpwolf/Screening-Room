@@ -365,12 +365,13 @@
 
 .credits {
     text-align: right;
-    color: white;
+    color:#AAA;
+    padding-right:10px;
 }
 .credits a{
-    color:#CCC;
+    color:white;
     text-decoration:none;
 }
-.credits a:hover;{
+.credits a:hover{
     text-decoration:underline;
 }
